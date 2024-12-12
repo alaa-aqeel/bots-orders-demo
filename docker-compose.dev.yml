@@ -1,0 +1,30 @@
+services:
+  development:
+    container_name: app_development
+    build:
+      dockerfile: ./docker/Dockerfile.dev
+      context: .
+    volumes:
+      - ./:/app
+    ports:
+    - 8080:8080
+    depends_on:
+      - postgres-db
+    networks:
+      - pgdb-net
+  postgres-db:
+    image: postgres
+    networks:
+      - pgdb-net
+    user: root
+    environment:
+      POSTGRES_USER: db_username
+      POSTGRES_PASSWORD: db_password
+      POSTGRES_DB: bot_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+
+networks:
+  pgdb-net:
