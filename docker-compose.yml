@@ -1,8 +1,8 @@
 services:
   development:
-    container_name: app_development
+    container_name: run_bot
     build:
-      dockerfile: ./docker/Dockerfile.dev
+      dockerfile: Dockerfile
       context: .
     volumes:
       - ./:/app
