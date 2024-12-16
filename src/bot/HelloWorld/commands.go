@@ -5,7 +5,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
-func botCommands(bot *tgbotapi.BotAPI) tgbot.BotCommand {
+func botCommands(bot *tgbotapi.BotAPI) *tgbot.BotCommands {
 	comands := tgbot.NewCommands(
 		tgbot.Command{
 			Command:     "start",

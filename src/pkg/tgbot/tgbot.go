@@ -14,6 +14,8 @@ func NewBot(config BotConfig) *tgbotapi.BotAPI {
 	bot, err := tgbotapi.NewBotAPI(config.AccessToken)
 	if err != nil {
 		log.Panic("[BOT-ERROR]: ", err)
+
+		return nil
 	}
 	log.Printf("[BOT]Authorized on account %s", bot.Self.UserName)
 

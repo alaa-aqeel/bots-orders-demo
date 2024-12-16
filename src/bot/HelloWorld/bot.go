@@ -11,7 +11,9 @@ func NewBot() *tgbotapi.BotAPI {
 	bot := tgbot.NewBot(tgbot.BotConfig{
 		AccessToken: os.Getenv("BOT_ACCESS_TOKEN"),
 	})
-	cmd := botCommands(bot)
-	botUpdates(bot, cmd)
+	if bot != nil {
+		cmd := botCommands(bot)
+		botUpdates(bot, cmd)
+	}
 	return bot
 }
