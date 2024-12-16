@@ -12,13 +12,13 @@ type Command struct {
 	Callback    CommandCallback
 }
 
-type BotCommand struct {
+type BotCommands struct {
 	botCommands []tgbotapi.BotCommand
 	commands    map[string]CommandCallback
 }
 
-func NewCommands(cmd ...Command) BotCommand {
-	bot := &BotCommand{
+func NewCommands(cmd ...Command) *BotCommands {
+	bot := &BotCommands{
 		botCommands: []tgbotapi.BotCommand{},
 		commands:    map[string]CommandCallback{},
 	}
@@ -26,7 +26,7 @@ func NewCommands(cmd ...Command) BotCommand {
 	return bot.Adds(cmd...)
 }
 
-func (c BotCommand) Adds(cmd ...Command) BotCommand {
+func (c *BotCommands) Adds(cmd ...Command) *BotCommands {
 	if len(cmd) <= 0 {
 		return c
 	}
@@ -41,12 +41,12 @@ func (c BotCommand) Adds(cmd ...Command) BotCommand {
 	return c
 }
 
-func (c BotCommand) NewSetMyCommands() tgbotapi.SetMyCommandsConfig {
+func (c BotCommands) NewSetMyCommands() tgbotapi.SetMyCommandsConfig {
 
 	return tgbotapi.NewSetMyCommands(c.botCommands...)
 }
 
-func (c BotCommand) GetCommandCallback(cmd string) CommandCallback {
+func (c BotCommands) GetCommandCallback(cmd string) CommandCallback {
 	callback, ok := c.commands[cmd]
 	if ok {
 		return callback
@@ -55,9 +55,14 @@ func (c BotCommand) GetCommandCallback(cmd string) CommandCallback {
 	return nil
 }
 
-func (c BotCommand) HandleCommand(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
+func (c BotCommands) HandleCommand(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	callback := c.GetCommandCallback(update.Message.Command())
 	if callback != nil {
 		callback(bot, update)
 	}
+}
+
+func (c BotCommands) GetBotCommands() []tgbotapi.BotCommand {
+
+	return c.botCommands
 }
