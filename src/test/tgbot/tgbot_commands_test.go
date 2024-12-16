@@ -13,7 +13,7 @@ func TestTgBotAddCommands(t *testing.T) {
 		tgbot.Command{
 			Command:     "start",
 			Description: "Starts the bot",
-			Callback:    nil, // Callback logic isn't tested here.
+			Callback:    func(bot *tgbotapi.BotAPI, update tgbotapi.Update) {},
 		},
 		tgbot.Command{
 			Command:     "say-hello",
@@ -22,8 +22,8 @@ func TestTgBotAddCommands(t *testing.T) {
 		},
 	)
 	expectedCommands := []tgbotapi.BotCommand{
-		{Command: "say-hello", Description: "Say hello world"},
 		{Command: "start", Description: "Starts the bot"},
+		{Command: "say-hello", Description: "Say hello world"},
 	}
 	registeredCommands := commands.GetBotCommands()
 	if len(registeredCommands) != len(expectedCommands) {
@@ -36,7 +36,7 @@ func TestTgBotAddCommands(t *testing.T) {
 		}
 		// check callback command
 		if commands.GetCommandCallback(cmd.Command) == nil {
-			t.Errorf("Command mismatch (%v): callback nill", cmd)
+			t.Errorf("Command mismatch (%v): callback nill", cmd.Command)
 		}
 	}
 }

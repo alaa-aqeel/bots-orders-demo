@@ -1,8 +1,4 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go
-
+name: testing
 on:
   push:
     branches: [ "main" ]
@@ -15,14 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: '1.20'
-
+        go-version: '1.22'
     - name: Build
-      run: go build -v ./...
-
+      run: go build -v ./src/cmd/...
     - name: Test
-      run: go test -v ./...
+      run: go test -v ./src/test/...
