@@ -1,4 +1,4 @@
-package helloworld
+package bot
 
 import (
 	"github.com/alaa-aqeel/bot-orders-demo/src/pkg/tgbot"
